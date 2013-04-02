@@ -1,0 +1,156 @@
+/* 
+    Document   : admin
+    Created on : 22/03/2013, 16:01:49
+    Author     : Cleber
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: url(../imagens/background.jpg) repeat-x top;
+    font-family:Tahoma, Geneva, sans-serif;
+    font-size:12px;
+}
+
+#tudo {
+    width: 100%;
+    margin: 0 auto;
+    text-align: left;
+    min-width: 1000px;
+}
+
+#header {
+    height:120px;
+    background:#004667;
+    color: #FFF;
+    text-align: center;
+    line-height: 120px;
+}
+
+#header .logo_header {
+    margin-top: 21px;    
+}
+
+#menu_box {
+    height:41px;
+    background:#387AAC;
+    border-top: 2px solid #387AAC;
+}
+
+ul#menu {
+    float: left;
+    margin: 0;
+    padding: 0;
+    margin-left: 2px;
+    list-style: none;
+}
+
+ul#menu li {
+    float: left;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+ul#menu li a {
+    background:#00436A;
+    padding: 12px 15px 12px 15px;
+    color: #FFF;
+    border-left:10px solid #002942;
+    border-right:10px solid #002942;
+}
+
+ul#menu li a:hover {
+    text-decoration: none;
+    border-left:10px solid #0FF;
+    border-right:10px solid #0FF;
+}
+
+ul#menu li ul {
+    display: none;
+}
+
+ul#menu li:hover ul {
+    display: block;
+    position: absolute;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    margin-top: 12px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#saudacao {
+    line-height: 38px;
+    float: right;
+    color: #FFF;
+    font-size: 14px;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+#conteudo {
+    width: 90%;
+    min-width: 940px;
+    background: #FFF;
+    margin: 0 auto;
+    margin-top: 30px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+table#selecionar {
+    margin: 0 auto;
+    width: 70%;
+    border-collapse: collapse
+}
+
+table#selecionar th, tr, td {
+    border: 1px solid #004667;
+    padding: 5px;
+}
+
+table#selecionar th {
+    text-align: center;
+    background: #387AAC;
+    color: #FFF;
+}
+
+table#selecionar tr:nth-child(even) {
+    background: #EEE;
+}
+
+table#selecionar .tabela_icones {
+    width: 60px;
+}
+
+h2.titulo_pagina {
+    color: #004667;
+    text-align: center;
+}
+
+p.link_inserir {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 25px 0px 25px 15%;
+}
+
+.img_inserir {
+    position: relative;
+    top: 7px;
+    margin-right: 10px;
+}
