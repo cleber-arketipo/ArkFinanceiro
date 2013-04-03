@@ -140,17 +140,70 @@ table#selecionar .tabela_icones {
 
 h2.titulo_pagina {
     color: #004667;
-    text-align: center;
+    margin-left: 15%;
 }
 
 p.link_inserir {
     font-size: 14px;
     font-weight: bold;
-    margin: 25px 0px 25px 15%;
+    margin: 20px 0px 20px 15%;
 }
 
 .img_inserir {
     position: relative;
     top: 7px;
     margin-right: 10px;
+}
+
+h4.erro_login {
+    margin-left: 15%;
+    color: #F00;
+    margin: 0;
+    text-align: center;
+}
+
+#form {
+    width: 800px;
+    margin: 0 auto;
+}
+
+form {
+    margin-top: 30px;
+}
+
+label {
+    width: 120px;
+    text-align: right;
+    float: left;
+    margin: 7px 0 12px 150px;
+    clear: both;
+}
+
+input {
+    margin-left: 10px;
+    width: 250px;
+    float: left;
+    border: 1px solid #004667;
+    padding: 3px;
+}
+
+input#submit {
+    clear:both;
+    margin: 0;
+    width: 130px;
+    margin-left: 340px;
+    margin-top: 10px;
+    padding: 3px;
+    font-weight: bold;
+}
+
+ul.errors {
+    clear: both;
+    list-style: none;
+    padding: 0;
+    margin-left: 280px;
+}
+
+.clear {
+    clear: both;
 }

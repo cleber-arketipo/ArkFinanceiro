@@ -1,3 +1,6 @@
-<h2>Login</h2>
-<?php echo ( sizeof( $this->messages ) > 0 ) ? $this->messages[0] : ""; ?>
-<?php echo $this->form; ?>
+<h2 class='titulo_pagina'>Login</h2>
+<h4 class="erro_login"><?php echo(sizeof($this->messages) > 0) ? $this->messages[0] : ""; ?></h4>
+<div id="form">
+    <?php echo $this->form; ?>
+</div>
+<div class="clear"></div>

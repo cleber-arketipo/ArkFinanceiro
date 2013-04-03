@@ -13,11 +13,11 @@ class GruposController extends Zend_Controller_Action
         }
     }
 
-    public function indexAction()
-    {
-
+    public function indexAction(){
         
-                
+        $grupos = new Default_Model_Grupo();
+        $this->view->posts = $grupos->fetchAll();
+        
     }
     
     public function inserirAction(){
@@ -30,7 +30,7 @@ class GruposController extends Zend_Controller_Action
             if ($form->isValid($this->_request->getPost())) {
                 
                 $id = $grupo->insert($form->getValues());
-                $this->_redirect('grupos/selecionar');
+                $this->_redirect('grupos');
                 
             } else {
                 
@@ -40,13 +40,6 @@ class GruposController extends Zend_Controller_Action
         }
         
         $this->view->form = $form;
-        
-    }
-    
-    public function selecionarAction(){
-        
-        $grupos = new Default_Model_Grupo();
-        $this->view->posts = $grupos->fetchAll();
         
     }
     
@@ -63,7 +56,7 @@ class GruposController extends Zend_Controller_Action
                 
                 $values = $form->getValues();
                 $grupos->update($values, 'id = ' . $values['id']);
-                $this->_redirect('grupos/selecionar');
+                $this->_redirect('grupos');
                 
             } else {
                 
@@ -88,7 +81,7 @@ class GruposController extends Zend_Controller_Action
         $grupos = new Default_Model_Grupo();
         $id = $this->_getParam('id');
         $grupos->delete("id = $id");
-        $this->_redirect('grupos/selecionar');
+        $this->_redirect('grupos');
         
     }
 

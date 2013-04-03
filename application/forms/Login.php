@@ -21,10 +21,6 @@ class Application_Form_Login extends Zend_Form
             array(
                 'Label',
                 array('separator' => ' ')
-            ),
-            array(
-                array('data' => 'HtmlTag'),
-                array('tag' => 'div')
             )
         );
         
@@ -34,10 +30,6 @@ class Application_Form_Login extends Zend_Form
             array(
                 'Description',
                 array('tag' => 'p','class' => 'description')
-            ),
-            array(
-                array('data' => 'HtmlTag'),
-                array('tag' => 'div')
             )
         );
         
@@ -58,8 +50,8 @@ class Application_Form_Login extends Zend_Form
               ->setDecorators($customElementDecorators);
  
         $submit = new Zend_Form_Element_Submit('submit');
-        $submit->setLabel('Logar')
-               ->setAttrib('id', 'submitbutton')
+        $submit->setLabel('Entrar')
+               ->setAttrib('id', 'submit')
                ->setDecorators($submitElementDecorators);
  
         $this->addElements(array($login, $senha, $submit));

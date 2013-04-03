@@ -13,25 +13,24 @@ class ClientesController extends Zend_Controller_Action
         }
     }
 
-    public function indexAction()
-    {
-
+    public function indexAction(){
         
-                
+        $clientes = new Default_Model_Cliente();
+        $this->view->posts = $clientes->fetchAll();
+        
     }
     
-    /*
     public function inserirAction(){
         
-        $form = new Application_Form_Noticia();
-        $noticia = new Admin_Model_Noticia();
+        $form = new Form_Cliente();
+        $cliente = new Default_Model_Cliente();
         
         if ($this->_request->isPost()) {
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $id = $noticia->insert($form->getValues());
-                $this->_redirect('admin/noticias/selecionar');
+                $id = $cliente->insert($form->getValues());
+                $this->_redirect('clientes');
                 
             } else {
                 
@@ -44,27 +43,20 @@ class ClientesController extends Zend_Controller_Action
         
     }
     
-    public function selecionarAction(){
-        
-        $noticias = new Admin_Model_Noticia();
-        $this->view->posts = $noticias->fetchAll();
-        
-    }
-    
     public function editarAction(){
         
-        $form = new Application_Form_Noticia();
-        $form->setAction('/admin/noticias/editar');
+        $form = new Form_Cliente();
+        $form->setAction('/clientes/editar');
         $form->submit->setLabel('Editar');
-        $noticias = new Admin_Model_Noticia();
+        $clientes = new Default_Model_Cliente();
 
         if ($this->_request->isPost()) {
             
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
-                $noticias->update($values, 'id = ' . $values['id']);
-                $this->_redirect('admin/noticias/selecionar');
+                $clientes->update($values, 'id = ' . $values['id']);
+                $this->_redirect('clientes');
                 
             } else {
                 
@@ -75,8 +67,8 @@ class ClientesController extends Zend_Controller_Action
         } else {
             
             $id = $this->_getParam('id');
-            $noticia = $noticias->fetchRow("id =$id")->toArray();
-            $form->populate($noticia);
+            $cliente = $clientes->fetchRow("id =$id")->toArray();
+            $form->populate($cliente);
             
         }
         
@@ -86,12 +78,11 @@ class ClientesController extends Zend_Controller_Action
     
     public function deletarAction(){
         
-        $noticias = new Admin_Model_Noticia();
+        $clientes = new Default_Model_Cliente();
         $id = $this->_getParam('id');
-        $noticias->delete("id = $id");
-        $this->_redirect('admin/noticias/selecionar');
+        $clientes->delete("id = $id");
+        $this->_redirect('clientes');
         
     }
-    */
 
 }
