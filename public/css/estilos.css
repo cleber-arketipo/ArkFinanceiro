@@ -179,12 +179,16 @@ label {
     clear: both;
 }
 
-input {
+input, select, textarea {
     margin-left: 10px;
     width: 250px;
     float: left;
     border: 1px solid #004667;
     padding: 3px;
+}
+
+select {
+    width: 258px;
 }
 
 input#submit {
@@ -202,8 +206,13 @@ ul.errors {
     list-style: none;
     padding: 0;
     margin-left: 280px;
+    color: #F00;
 }
 
 .clear {
     clear: both;
+}
+
+#grupo_form {
+    display: none;
 }

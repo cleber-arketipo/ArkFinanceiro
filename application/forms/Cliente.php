@@ -24,6 +24,19 @@ class Form_Cliente extends Zend_Form
             )
         );
         
+        $radioElementDecorators = array(
+            'ViewHelper',
+            'Errors',
+            array(
+                'Description',
+                array('tag' => 'div','class' => 'description')
+            ),
+            array(
+                'Label',
+                array('separator' => '')
+            )
+        );
+        
         $submitElementDecorators = array(
             'ViewHelper',
             'Errors',
@@ -38,9 +51,10 @@ class Form_Cliente extends Zend_Form
         
         $tipo = new Zend_Form_Element_Radio('tipo');
         $tipo->setLabel('Tipo')
-             ->setMultiOptions(array('PF'=>'PF', 'PJ'=>'PJ'))
+             ->setMultiOptions(array('PF'=>'PF', 'PJ'=>'PJ'))             
              ->setRequired(true)
-             ->setDecorators($customElementDecorators);
+             ->setSeparator('')
+             ->setDecorators($radioElementDecorators);
         
         $razao_social = new Zend_Form_Element_Text('razao_social');
         $razao_social->setLabel('Razão Social')
@@ -78,10 +92,11 @@ class Form_Cliente extends Zend_Form
         $cep->setLabel('CEP')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->setAttrib('onmouseout', 'getEndereco()')
              ->setDecorators($customElementDecorators);
         
-        $rua = new Zend_Form_Element_Text('rua');
-        $rua->setLabel('Rua')
+        $endereco = new Zend_Form_Element_Text('endereco');
+        $endereco->setLabel('Rua')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
@@ -104,11 +119,40 @@ class Form_Cliente extends Zend_Form
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
         
-        $estado = new Zend_Form_Element_Text('estado');
+        $estado = new Zend_Form_Element_Select('estado');
         $estado->setLabel('Estado')
-             ->addFilter('StripTags')
-             ->addValidator('NotEmpty')
-             ->setDecorators($customElementDecorators);
+               ->setMultiOptions(array(
+                   ''=>'-- Selecione --',
+                   'AC'=>'Acre',
+                   'AL'=>'Alagoas',
+                   'AP'=>'Amapá',
+                   'AM'=>'Amazonas',
+                   'BA'=>'Bahia',
+                   'CE'=>'Ceará',
+                   'DF'=>'Distrito Federal',
+                   'ES'=>'Espírito Santo',
+                   'GO'=>'Goiás',
+                   'MA'=>'Maranhão',
+                   'MS'=>'Mato Grosso do Sul',
+                   'MT'=>'Mato Grosso',
+                   'MG'=>'Minas Gerais',
+                   'PA'=>'Pará',
+                   'PB'=>'Paraíba',
+                   'PR'=>'Paraná',
+                   'PE'=>'Pernambuco',
+                   'PI'=>'Piauí',
+                   'RJ'=>'Rio de Janeiro',
+                   'RN'=>'Rio Grande do Norte',
+                   'RS'=>'Rio Grande do Sul',
+                   'RO'=>'Rondônia',
+                   'RR'=>'Roraima',
+                   'SC'=>'Santa Catarina',
+                   'SP'=>'São Paulo',
+                   'SE'=>'Sergipe',
+                   'TO'=>'Tocantins',
+                   ))
+               ->addFilter('StripTags')
+               ->addValidator('NotEmpty');
         
         $telefone = new Zend_Form_Element_Text('telefone');
         $telefone->setLabel('Telefone')
@@ -134,7 +178,30 @@ class Form_Cliente extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipo, $razao_social, $nome, $documento, $ie, $ramo, $cep, $rua, $numero, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
+        $this->addElements(array($id, $tipo, $razao_social, $nome, $documento, $ie, $ramo, $cep, $endereco, $numero, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
+        
+        
+        $this->addDisplayGroup(array(        
+                'razao_social',
+                'nome',
+                'documento',
+                'ie',
+                'ramo',
+                'cep',
+                'endereco',
+                'numero',
+                'bairro',
+                'cidade',
+                'estado',
+                'telefone',
+                'celular',
+                'responsavel',
+                'submit'
+            ), 'campos', array('legend' => 'Contact Information'));
+        
+        $campos = $this->getDisplayGroup('campos');
+        $campos->setDecorators(array('FormElements',array('HtmlTag',array('tag'=>'div','id'=>'grupo_form'))));
+        
         
         $this->setAction('/clientes/inserir')
              ->setMethod('post');
