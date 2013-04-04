@@ -29,7 +29,12 @@
                         <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'clientes'), null, true); ?>">Editar/Excluir</a></li>
                     </ul>
                 </li>                
-                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Fornecedores</a></li>
+                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Fornecedores</a>
+                    <ul id="submenu">
+                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores', 'action' => 'inserir'), null, true); ?>">Cadastrar</a></li>
+                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Editar/Excluir</a></li>
+                    </ul>
+                </li>
                 <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos'), null, true); ?>">Grupos</a>
                     <ul id="submenu">
                         <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos', 'action' => 'inserir'), null, true); ?>">Cadastrar</a></li>

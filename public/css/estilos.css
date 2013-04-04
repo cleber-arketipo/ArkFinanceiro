@@ -184,7 +184,18 @@ input, select, textarea {
     width: 250px;
     float: left;
     border: 1px solid #004667;
-    padding: 3px;
+    padding: 3px;    
+}
+
+label.label_radio_tipo {
+    width: 120px;
+    float: left;
+    margin:0 0 10px 280px;
+}
+
+input.input_radio {
+    width: 20px;
+    float: right;
 }
 
 select {

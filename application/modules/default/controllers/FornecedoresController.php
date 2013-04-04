@@ -13,25 +13,24 @@ class FornecedoresController extends Zend_Controller_Action
         }
     }
 
-    public function indexAction()
-    {
-
+    public function indexAction(){
         
-                
+        $fornecedores = new Default_Model_Fornecedor();
+        $this->view->posts = $fornecedores->fetchAll();
+        
     }
     
-    /*
     public function inserirAction(){
         
-        $form = new Application_Form_Noticia();
-        $noticia = new Admin_Model_Noticia();
+        $form = new Form_Fornecedor();
+        $fornecedor = new Default_Model_Fornecedor();
         
         if ($this->_request->isPost()) {
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $id = $noticia->insert($form->getValues());
-                $this->_redirect('admin/noticias/selecionar');
+                $id = $fornecedor->insert($form->getValues());
+                $this->_redirect('fornecedores');
                 
             } else {
                 
@@ -44,27 +43,20 @@ class FornecedoresController extends Zend_Controller_Action
         
     }
     
-    public function selecionarAction(){
-        
-        $noticias = new Admin_Model_Noticia();
-        $this->view->posts = $noticias->fetchAll();
-        
-    }
-    
     public function editarAction(){
         
-        $form = new Application_Form_Noticia();
-        $form->setAction('/admin/noticias/editar');
+        $form = new Form_Fornecedor();
+        $form->setAction('/fornecedores/editar');
         $form->submit->setLabel('Editar');
-        $noticias = new Admin_Model_Noticia();
+        $fornecedores = new Default_Model_Fornecedor();
 
         if ($this->_request->isPost()) {
             
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
-                $noticias->update($values, 'id = ' . $values['id']);
-                $this->_redirect('admin/noticias/selecionar');
+                $fornecedores->update($values, 'id = ' . $values['id']);
+                $this->_redirect('fornecedores');
                 
             } else {
                 
@@ -75,8 +67,8 @@ class FornecedoresController extends Zend_Controller_Action
         } else {
             
             $id = $this->_getParam('id');
-            $noticia = $noticias->fetchRow("id =$id")->toArray();
-            $form->populate($noticia);
+            $fornecedor = $fornecedores->fetchRow("id =$id")->toArray();
+            $form->populate($fornecedor);
             
         }
         
@@ -86,12 +78,11 @@ class FornecedoresController extends Zend_Controller_Action
     
     public function deletarAction(){
         
-        $noticias = new Admin_Model_Noticia();
+        $fornecedores = new Default_Model_Fornecedor();
         $id = $this->_getParam('id');
-        $noticias->delete("id = $id");
-        $this->_redirect('admin/noticias/selecionar');
+        $fornecedores->delete("id = $id");
+        $this->_redirect('fornecedores');
         
     }
-    */
 
 }

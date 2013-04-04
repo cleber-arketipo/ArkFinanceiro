@@ -51,7 +51,9 @@ class Form_Cliente extends Zend_Form
         
         $tipo = new Zend_Form_Element_Radio('tipo');
         $tipo->setLabel('Tipo')
-             ->setMultiOptions(array('PF'=>'PF', 'PJ'=>'PJ'))             
+             ->setMultiOptions(array('PF'=>'PF', 'PJ'=>'PJ'))
+             ->setAttrib('class', 'input_radio')
+             ->setAttrib('label_class', 'label_radio_tipo')
              ->setRequired(true)
              ->setSeparator('')
              ->setDecorators($radioElementDecorators);
