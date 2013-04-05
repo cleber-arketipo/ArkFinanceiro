@@ -51,7 +51,7 @@ class Form_Grupo extends Zend_Form
         
         $this->addElements(array($id, $nome, $submit));
         
-        $this->setAction('/grupos/inserir')
+        $this->setAction('grupos/inserir')
              ->setMethod('post');
     }
 

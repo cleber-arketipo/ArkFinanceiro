@@ -46,7 +46,7 @@ class ClientesController extends Zend_Controller_Action
     public function editarAction(){
         
         $form = new Form_Cliente();
-        $form->setAction('/clientes/editar');
+        $form->setAction('clientes/editar');
         $form->submit->setLabel('Editar');
         $clientes = new Default_Model_Cliente();
 

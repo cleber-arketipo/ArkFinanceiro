@@ -46,7 +46,7 @@ class GruposController extends Zend_Controller_Action
     public function editarAction(){
         
         $form = new Form_Grupo();
-        $form->setAction('/grupos/editar');
+        $form->setAction('grupos/editar');
         $form->submit->setLabel('Editar');
         $grupos = new Default_Model_Grupo();
 

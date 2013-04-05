@@ -13,25 +13,27 @@ class CaixaController extends Zend_Controller_Action
         }
     }
 
-    public function indexAction()
-    {
-
+    public function indexAction(){
         
-                
+        $caixas = new Default_Model_Caixa();
+        $this->view->posts = $caixas->fetchAll();
+        
     }
     
-    /*
     public function inserirAction(){
         
-        $form = new Application_Form_Noticia();
-        $noticia = new Admin_Model_Noticia();
+        $form = new Form_Caixa();
+        $caixa = new Default_Model_Caixa();
         
         if ($this->_request->isPost()) {
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $id = $noticia->insert($form->getValues());
-                $this->_redirect('admin/noticias/selecionar');
+                $date = new Zend_Date($hora, 'dd/MM/yyyy', $locale);
+                $date->get('yyyy-MM-dd');
+                
+                $id = $caixa->insert($form->getValues());
+                $this->_redirect('caixa');
                 
             } else {
                 
@@ -44,27 +46,20 @@ class CaixaController extends Zend_Controller_Action
         
     }
     
-    public function selecionarAction(){
-        
-        $noticias = new Admin_Model_Noticia();
-        $this->view->posts = $noticias->fetchAll();
-        
-    }
-    
     public function editarAction(){
         
-        $form = new Application_Form_Noticia();
-        $form->setAction('/admin/noticias/editar');
+        $form = new Form_Caixa();
+        $form->setAction('caixa/editar');
         $form->submit->setLabel('Editar');
-        $noticias = new Admin_Model_Noticia();
+        $caixas = new Default_Model_Caixa();
 
         if ($this->_request->isPost()) {
             
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
-                $noticias->update($values, 'id = ' . $values['id']);
-                $this->_redirect('admin/noticias/selecionar');
+                $caixas->update($values, 'id = ' . $values['id']);
+                $this->_redirect('caixa');
                 
             } else {
                 
@@ -75,8 +70,8 @@ class CaixaController extends Zend_Controller_Action
         } else {
             
             $id = $this->_getParam('id');
-            $noticia = $noticias->fetchRow("id =$id")->toArray();
-            $form->populate($noticia);
+            $caixa = $caixas->fetchRow("id =$id")->toArray();
+            $form->populate($caixa);
             
         }
         
@@ -86,12 +81,27 @@ class CaixaController extends Zend_Controller_Action
     
     public function deletarAction(){
         
-        $noticias = new Admin_Model_Noticia();
+        $caixas = new Default_Model_Caixa();
         $id = $this->_getParam('id');
-        $noticias->delete("id = $id");
-        $this->_redirect('admin/noticias/selecionar');
+        $caixas->delete("id = $id");
+        $this->_redirect('caixa');
         
     }
-    */
+    
+    public function contasAction(){
+        
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(false);
+        
+        $data = $this->_request->getPost();
+
+        if($data['tipocaixa'] == 'Entrada')
+            $campos = new Default_Model_Cliente();
+        elseif($data['tipocaixa'] == 'Saída')
+            $campos = new Default_Model_Fornecedor();
+        
+        $this->_helper->json($campos->fetchAll());
+        
+    }
 
 }

@@ -1,5 +1,5 @@
 <h2 class='titulo_pagina'>Grupos</h2>
-<p class="link_inserir"><a href="/grupos/inserir"><img src="imagens/add.png" width="24" height="24" alt="Inserir Grupo" class="img_inserir" />Cadastrar Grupo</a></p>
+<p class="link_inserir"><a href="/financeiro/grupos/inserir"><img src="public/imagens/add.png" width="24" height="24" alt="Inserir Grupo" class="img_inserir" />Cadastrar Grupo</a></p>
 <?php foreach($this->posts as $p) { ?>
 <table id="selecionar">
     <thead>
@@ -15,8 +15,8 @@
                 <tr>
                     <td align="center"><?php echo $p['id']; ?></td>
                     <td><?php echo $p['nome']; ?></td>
-                    <td align="center"><a href="/grupos/editar/id/<?php echo $p['id'];?>"><img src="imagens/edit.png" width="16" height="16" alt="Editar Grupo" /></a></td>
-                    <td align="center"><a href="/grupos/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="imagens/delete.png" width="16" height="16" alt="Excluir Grupo" /></a></td>
+                    <td align="center"><a href="/financeiro/grupos/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Grupo" /></a></td>
+                    <td align="center"><a href="/financeiro/grupos/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Grupo" /></a></td>
                 </tr>
         <?php } ?>
     </tbody>

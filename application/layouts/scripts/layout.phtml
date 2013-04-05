@@ -4,43 +4,27 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Arkétipo - Financeiro</title>
 <base href="http://<?php echo $_SERVER['HTTP_HOST'] . $this->baseUrl(); ?>/" />
-<link href="css/estilos.css" type="text/css" rel="stylesheet" />
-<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
-<script type="text/javascript" src="js/scripts.js"></script>
+<link href="public/css/estilos.css" type="text/css" rel="stylesheet" />
+<script type="text/javascript" src="public/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="public/js/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="public/js/scripts.js"></script>
 
 </head>
 
 <body>
     <div id="tudo">
         <div id="header">
-            <img src="imagens/logo.png" width="163" height="85" class="logo_header" />
+            <img src="public/imagens/logo.png" width="163" height="85" class="logo_header" />
         </div>
         <?php
         if(isset($this->admin->nome)){
         ?>
         <div id="menu_box">
-            <ul id="menu">
-                <li><a href="<?php echo $this->url(array('module' => 'default'), null, true); ?>">Início</a></li>
+            <ul id="menu">                
                 <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'caixa'), null, true); ?>">Controle de Caixa</a></li>
-                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'clientes'), null, true); ?>">Clientes</a>
-                    <ul id="submenu">
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'clientes', 'action' => 'inserir'), null, true); ?>">Cadastrar</a></li>
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'clientes'), null, true); ?>">Editar/Excluir</a></li>
-                    </ul>
-                </li>                
-                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Fornecedores</a>
-                    <ul id="submenu">
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores', 'action' => 'inserir'), null, true); ?>">Cadastrar</a></li>
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Editar/Excluir</a></li>
-                    </ul>
-                </li>
-                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos'), null, true); ?>">Grupos</a>
-                    <ul id="submenu">
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos', 'action' => 'inserir'), null, true); ?>">Cadastrar</a></li>
-                        <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos'), null, true); ?>">Editar/Excluir</a></li>
-                    </ul>
-                </li>
+                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'clientes'), null, true); ?>">Clientes</a></li>                
+                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'fornecedores'), null, true); ?>">Fornecedores</a></li>
+                <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'grupos'), null, true); ?>">Grupos</a></li>
                 <li><a href="<?php echo $this->url(array('module' => 'default', 'controller' => 'logout'), null, true); ?>">Sair</a></li>
             </ul>
             <div id="saudacao">

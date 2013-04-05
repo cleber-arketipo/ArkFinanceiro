@@ -37,7 +37,30 @@ $(function() {
     $('#tipo-PJ').click(function(){
         ativaPJ();
     });
-   
+    
+    $("#tipocaixa").change(function(){
+        
+        
+        $.ajax({
+            type: "POST",
+            url: 'http://arkfinanceiro.localhost/caixa/contas',
+            data: {tipocaixa: $("#tipocaixa").val()},
+            dataType: "json",
+            success: function(retorno) {
+                
+                var options = '<option value="">-- Selecione --</option>';
+                
+                $.each(retorno , function(key, value){
+                    options += '<option value="' + value['id'] + '">' + value['nome'] + '</option>';
+                });
+                
+                $("#conta").html(options);
+            }
+          
+        });
+        
+    });
+    
 });
 
 function ativaPF(){

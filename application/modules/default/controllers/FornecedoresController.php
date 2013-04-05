@@ -46,7 +46,7 @@ class FornecedoresController extends Zend_Controller_Action
     public function editarAction(){
         
         $form = new Form_Fornecedor();
-        $form->setAction('/fornecedores/editar');
+        $form->setAction('fornecedores/editar');
         $form->submit->setLabel('Editar');
         $fornecedores = new Default_Model_Fornecedor();
 

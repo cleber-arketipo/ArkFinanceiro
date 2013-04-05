@@ -1,5 +1,5 @@
 <h2 class='titulo_pagina'>Fornecedores</h2>
-<p class="link_inserir"><a href="/fornecedores/inserir"><img src="imagens/add.png" width="24" height="24" alt="Cadastrar Fornecedor" class="img_inserir" />Cadastrar Fornecedor</a></p>
+<p class="link_inserir"><a href="/financeiro/fornecedores/inserir"><img src="public/imagens/add.png" width="24" height="24" alt="Cadastrar Fornecedor" class="img_inserir" />Cadastrar Fornecedor</a></p>
 <?php foreach($this->posts as $p) { ?>
 <table id="selecionar">
     <thead>
@@ -15,8 +15,8 @@
                 <tr>
                     <td align="center"><?php echo $p['id']; ?></td>
                     <td><?php echo $p['nome']; ?></td>
-                    <td align="center"><a href="/fornecedores/editar/id/<?php echo $p['id'];?>"><img src="imagens/edit.png" width="16" height="16" alt="Editar Fornecedor" /></a></td>
-                    <td align="center"><a href="/fornecedores/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="imagens/delete.png" width="16" height="16" alt="Excluir Fornecedor" /></a></td>
+                    <td align="center"><a href="/financeiro/fornecedores/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Fornecedor" /></a></td>
+                    <td align="center"><a href="/financeiro/fornecedores/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Fornecedor" /></a></td>
                 </tr>
         <?php } ?>
     </tbody>

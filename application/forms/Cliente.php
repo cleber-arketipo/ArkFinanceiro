@@ -73,7 +73,6 @@ class Form_Cliente extends Zend_Form
         
         $documento = new Zend_Form_Element_Text('documento');
         $documento->setLabel('Documento')
-             ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
@@ -98,7 +97,7 @@ class Form_Cliente extends Zend_Form
              ->setDecorators($customElementDecorators);
         
         $endereco = new Zend_Form_Element_Text('endereco');
-        $endereco->setLabel('Rua')
+        $endereco->setLabel('Endereço')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
@@ -205,7 +204,7 @@ class Form_Cliente extends Zend_Form
         $campos->setDecorators(array('FormElements',array('HtmlTag',array('tag'=>'div','id'=>'grupo_form'))));
         
         
-        $this->setAction('/clientes/inserir')
+        $this->setAction('clientes/inserir')
              ->setMethod('post');
     }
 
