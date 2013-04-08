@@ -62,6 +62,7 @@ class Form_Fornecedor extends Zend_Form
         $razao_social->setLabel('Razão Social')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $nome = new Zend_Form_Element_Text('nome');
@@ -69,6 +70,7 @@ class Form_Fornecedor extends Zend_Form
              ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $documento = new Zend_Form_Element_Text('documento');
@@ -87,6 +89,7 @@ class Form_Fornecedor extends Zend_Form
         $ramo->setLabel('Ramo de Atividade')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $cep = new Zend_Form_Element_Text('cep');
@@ -100,57 +103,68 @@ class Form_Fornecedor extends Zend_Form
         $endereco->setLabel('Endereço')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $numero = new Zend_Form_Element_Text('numero');
         $numero->setLabel('Nº')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
+        
+        $complemento = new Zend_Form_Element_Text('complemento');
+        $complemento->setLabel('Complemento')
+                    ->addFilter('StripTags')
+                    ->addValidator('NotEmpty')
+                    ->addFilter('StringToUpper')
+                    ->setDecorators($customElementDecorators);
         
         $bairro = new Zend_Form_Element_Text('bairro');
         $bairro->setLabel('Bairro')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $cidade = new Zend_Form_Element_Text('cidade');
         $cidade->setLabel('Cidade')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $estado = new Zend_Form_Element_Select('estado');
         $estado->setLabel('Estado')
                ->setMultiOptions(array(
                    ''=>'-- Selecione --',
-                   'AC'=>'Acre',
-                   'AL'=>'Alagoas',
-                   'AP'=>'Amapá',
-                   'AM'=>'Amazonas',
-                   'BA'=>'Bahia',
-                   'CE'=>'Ceará',
-                   'DF'=>'Distrito Federal',
-                   'ES'=>'Espírito Santo',
-                   'GO'=>'Goiás',
-                   'MA'=>'Maranhão',
-                   'MS'=>'Mato Grosso do Sul',
-                   'MT'=>'Mato Grosso',
-                   'MG'=>'Minas Gerais',
-                   'PA'=>'Pará',
-                   'PB'=>'Paraíba',
-                   'PR'=>'Paraná',
-                   'PE'=>'Pernambuco',
-                   'PI'=>'Piauí',
-                   'RJ'=>'Rio de Janeiro',
-                   'RN'=>'Rio Grande do Norte',
-                   'RS'=>'Rio Grande do Sul',
-                   'RO'=>'Rondônia',
-                   'RR'=>'Roraima',
-                   'SC'=>'Santa Catarina',
-                   'SP'=>'São Paulo',
-                   'SE'=>'Sergipe',
-                   'TO'=>'Tocantins',
+                   'AC'=>'ACRE',
+                   'AL'=>'ALAGOAS',
+                   'AP'=>'AMAPÁ',
+                   'AM'=>'AMAZONAS',
+                   'BA'=>'BAHIA',
+                   'CE'=>'CEARÁ',
+                   'DF'=>'DISTRITO FEDERAL',
+                   'ES'=>'ESPÍRITO SANTO',
+                   'GO'=>'GOIÁS',
+                   'MA'=>'MARANHÃO',
+                   'MS'=>'MATO GROSSO DO SUL',
+                   'MT'=>'MATO GROSSO',
+                   'MG'=>'MINAS GERAIS',
+                   'PA'=>'PARÁ',
+                   'PB'=>'PARAÍBA',
+                   'PR'=>'PARANÁ',
+                   'PE'=>'PERNAMBUCO',
+                   'PI'=>'PIAUÍ',
+                   'RJ'=>'RIO DE JANEIRO',
+                   'RN'=>'RIO GRANDE DO NORTE',
+                   'RS'=>'RIO GRANDE DO SUL',
+                   'RO'=>'RONDÔNIA',
+                   'RR'=>'RORAIMA',
+                   'SC'=>'SANTA CATARINA',
+                   'SP'=>'SÃO PAULO',
+                   'SE'=>'SERGIPE',
+                   'TO'=>'TOCANTINS',
                    ))
                ->addFilter('StripTags')
                ->addValidator('NotEmpty');
@@ -171,6 +185,7 @@ class Form_Fornecedor extends Zend_Form
         $responsavel->setLabel('Responsável')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $submit = new Zend_Form_Element_Submit('submit');
@@ -179,18 +194,19 @@ class Form_Fornecedor extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipo, $razao_social, $nome, $documento, $ie, $ramo, $cep, $endereco, $numero, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
+        $this->addElements(array($id, $tipo, $documento, $razao_social, $nome, $ie, $ramo, $cep, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
         
         
         $this->addDisplayGroup(array(        
-                'razao_social',
-                'nome',
                 'documento',
+                'razao_social',
+                'nome',                
                 'ie',
                 'ramo',
                 'cep',
                 'endereco',
                 'numero',
+                'complemento',
                 'bairro',
                 'cidade',
                 'estado',
@@ -206,6 +222,22 @@ class Form_Fornecedor extends Zend_Form
         
         $this->setAction('fornecedores/inserir')
              ->setMethod('post');
+    }
+    
+    public function isValid($data)
+    {
+        $this->getElement('documento')
+             ->addValidator(
+                     'Db_NoRecordExists',
+                     true,
+                     array(
+                         'table'     => 'fornecedores',
+                         'field'     => 'documento',
+                         'messages'   => 'Este fornecedor já foi cadastrado'
+                         )
+                     );
+        
+        return parent::isValid($data);
     }
 
 }

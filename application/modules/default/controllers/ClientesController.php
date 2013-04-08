@@ -84,5 +84,20 @@ class ClientesController extends Zend_Controller_Action
         $this->_redirect('clientes');
         
     }
+    
+    public function verificaAction(){
+        
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(false);
+        
+        $data = $this->_request->getPost();
+
+        $campos = new Default_Model_Cliente();
+        
+        $select = $campos->select()->where('documento = ?', $data['documento']);
+        
+        $this->_helper->json($campos->fetchAll($select));
+        
+    }
 
 }

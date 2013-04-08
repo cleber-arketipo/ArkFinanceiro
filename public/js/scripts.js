@@ -14,7 +14,7 @@ $(function() {
         $('#grupo_form').css('display', 'block');
     });
     
-    if($('#id').val() !== ""){
+    if(($('#id').val() !== "") || (jQuery($('#tipo-PF')).is(":checked")) || (jQuery($('#tipo-PJ')).is(":checked"))){
         $('label[for=tipo]').css('display', 'none');
         $('label[class=label_radio_tipo]').css('display', 'none');
         $('#tipo-PF').css('display', 'none');
@@ -38,12 +38,11 @@ $(function() {
         ativaPJ();
     });
     
-    $("#tipocaixa").change(function(){
-        
+    $("#tipocaixa").change(function(){        
         
         $.ajax({
             type: "POST",
-            url: 'http://arkfinanceiro.localhost/caixa/contas',
+            url: 'caixa/contas',
             data: {tipocaixa: $("#tipocaixa").val()},
             dataType: "json",
             success: function(retorno) {
@@ -55,6 +54,33 @@ $(function() {
                 });
                 
                 $("#conta").html(options);
+            }
+          
+        });
+        
+    });
+    
+    $("#documento").change(function(){        
+        
+        $.ajax({
+            type: "POST",
+            url: 'clientes/verifica',
+            data: {documento: $("#documento").val()},
+            dataType: "json",
+            success: function(retorno) {
+                               
+                $.each(retorno , function(key, value){
+                    if(value['documento'] == $("#documento").val()){
+                        $('<ul class="errors" id="docerro"><li>Este cliente já foi cadastrado</li></ul>').insertAfter('#documento');
+                    } else {
+                        $("#docerro").remove();
+                    }
+                });
+                
+                if(retorno == ""){                    
+                    $("#docerro").remove();
+                }
+                                
             }
           
         });

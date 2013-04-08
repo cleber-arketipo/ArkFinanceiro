@@ -184,7 +184,8 @@ input, select, textarea {
     width: 250px;
     float: left;
     border: 1px solid #004667;
-    padding: 3px;    
+    padding: 3px;  
+    text-transform: uppercase;
 }
 
 label.label_radio_tipo {
@@ -200,6 +201,7 @@ input.input_radio {
 
 select {
     width: 258px;
+    text-transform: uppercase;
 }
 
 input#submit {
@@ -210,6 +212,7 @@ input#submit {
     margin-top: 10px;
     padding: 3px;
     font-weight: bold;
+    text-transform: capitalize;
 }
 
 ul.errors {
