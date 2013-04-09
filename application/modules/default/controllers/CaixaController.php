@@ -29,8 +29,12 @@ class CaixaController extends Zend_Controller_Action
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $date = new Zend_Date($hora, 'dd/MM/yyyy', $locale);
-                $date->get('yyyy-MM-dd');
+                /* Testar
+                $locale = new Zend_Locale(date_default_timezone_get());
+                $date='';
+                $date = new Zend_Date($dataentrada, 'dd/MM/YYYY', $locale);
+                $date = $date->toString('YYYY-MM-dd', 'America/Sao_Paulo');
+                */
                 
                 $id = $caixa->insert($form->getValues());
                 $this->_redirect('caixa');
@@ -95,12 +99,14 @@ class CaixaController extends Zend_Controller_Action
         
         $data = $this->_request->getPost();
 
-        if($data['tipocaixa'] == 'Entrada')
+        if($data['tipocaixa'] == 'ENTRADA')
             $campos = new Default_Model_Cliente();
-        elseif($data['tipocaixa'] == 'Saída')
+        elseif($data['tipocaixa'] == 'SAÍDA')
             $campos = new Default_Model_Fornecedor();
         
-        $this->_helper->json($campos->fetchAll());
+        $select = $campos->select()->order('nome ASC');
+        
+        $this->_helper->json($campos->fetchAll($select));
         
     }
 

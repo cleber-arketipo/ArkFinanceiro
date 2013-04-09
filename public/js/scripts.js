@@ -47,7 +47,7 @@ $(function() {
             dataType: "json",
             success: function(retorno) {
                 
-                var options = '<option value="">-- Selecione --</option>';
+                var options = '<option value="">-- SELECIONE --</option>';
                 
                 $.each(retorno , function(key, value){
                     options += '<option value="' + value['id'] + '">' + value['nome'] + '</option>';
@@ -62,16 +62,24 @@ $(function() {
     
     $("#documento").change(function(){        
         
+        var docurl = "";
+        
+        if($("#tipocadastro").val() === 'cliente'){
+            docurl = 'clientes/verifica';
+        } else if($("#tipocadastro").val() === 'fornecedor'){
+            docurl = 'fornecedores/verifica';
+        }
+        
         $.ajax({
             type: "POST",
-            url: 'clientes/verifica',
+            url: docurl,
             data: {documento: $("#documento").val()},
             dataType: "json",
             success: function(retorno) {
                                
                 $.each(retorno , function(key, value){
                     if(value['documento'] == $("#documento").val()){
-                        $('<ul class="errors" id="docerro"><li>Este cliente já foi cadastrado</li></ul>').insertAfter('#documento');
+                        $('<ul class="errors" id="docerro"><li>Este '+ $("#tipocadastro").val() +' já foi cadastrado</li></ul>').insertAfter('#documento');
                     } else {
                         $("#docerro").remove();
                     }

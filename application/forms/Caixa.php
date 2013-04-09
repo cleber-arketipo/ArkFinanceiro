@@ -59,7 +59,7 @@ class Form_Caixa extends Zend_Form
         $tipo = new Zend_Form_Element_Select('tipo');
         $tipo->setLabel('Tipo')
              ->setAttrib('id', 'tipocaixa')
-             ->setMultiOptions(array(''=>'-- Selecione --', 'Entrada'=>'Entrada', 'Saída'=>'Saída'))
+             ->setMultiOptions(array(''=>'-- SELECIONE --', 'ENTRADA'=>'ENTRADA', 'SAÍDA'=>'SAÍDA'))
              ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
@@ -67,7 +67,7 @@ class Form_Caixa extends Zend_Form
         
         $conta = new Zend_Form_Element_Select('conta');
         $conta->setLabel('Conta')
-              ->setMultiOptions(array(''=>'-- Selecione --'))
+              ->setMultiOptions(array(''=>'-- SELECIONE --'))
               ->setRequired(true)
               ->addFilter('StripTags')
               ->addValidator('Int')
@@ -76,7 +76,7 @@ class Form_Caixa extends Zend_Form
                 
         $grupo = new Zend_Form_Element_Select('grupo');
         $grupo->setLabel('Grupo')      
-              ->addMultiOption('', '-- Selecione --')
+              ->addMultiOption('', '-- SELECIONE --')
               ->setRequired(true)
               ->addFilter('StripTags')
               ->addValidator('NotEmpty')
@@ -104,7 +104,7 @@ class Form_Caixa extends Zend_Form
         
         $situacao = new Zend_Form_Element_Select('situacao');
         $situacao->setLabel('Situação')
-                 ->setMultiOptions(array(''=>'-- Selecione --', 'Previsto'=>'Previsto', 'Realizado'=>'Realizado'))
+                 ->setMultiOptions(array(''=>'-- SELECIONE --', 'PREVISTO'=>'PREVISTO', 'REALIZADO'=>'REALIZADO'))
                  ->setRequired(true)
                  ->addFilter('StripTags')
                  ->addValidator('NotEmpty')

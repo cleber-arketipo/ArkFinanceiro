@@ -49,6 +49,12 @@ class Form_Fornecedor extends Zend_Form
         $id = new Zend_Form_Element_Hidden('id');
         $id->setDecorators($customElementDecorators);
         
+        $tipocadastro = new Zend_Form_Element_Hidden('tipocadastro');
+        $tipocadastro->setValue('fornecedor')
+                     ->setRequired(false)
+                     ->setIgnore(true)
+                     ->setDecorators($customElementDecorators);
+        
         $tipo = new Zend_Form_Element_Radio('tipo');
         $tipo->setLabel('Tipo')
              ->setMultiOptions(array('PF'=>'PF', 'PJ'=>'PJ'))
@@ -75,9 +81,9 @@ class Form_Fornecedor extends Zend_Form
         
         $documento = new Zend_Form_Element_Text('documento');
         $documento->setLabel('Documento')
-             ->addFilter('StripTags')
-             ->addValidator('NotEmpty')
-             ->setDecorators($customElementDecorators);
+                  ->addFilter('StripTags')
+                  ->addValidator('NotEmpty')
+                  ->setDecorators($customElementDecorators);
         
         $ie = new Zend_Form_Element_Text('ie');
         $ie->setLabel('Inscrição Estadual')
@@ -137,7 +143,7 @@ class Form_Fornecedor extends Zend_Form
         $estado = new Zend_Form_Element_Select('estado');
         $estado->setLabel('Estado')
                ->setMultiOptions(array(
-                   ''=>'-- Selecione --',
+                   ''=>'-- SELECIONE --',
                    'AC'=>'ACRE',
                    'AL'=>'ALAGOAS',
                    'AP'=>'AMAPÁ',
@@ -194,7 +200,7 @@ class Form_Fornecedor extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipo, $documento, $razao_social, $nome, $ie, $ramo, $cep, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
+        $this->addElements(array($id, $tipocadastro, $tipo, $documento, $razao_social, $nome, $ie, $ramo, $cep, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
         
         
         $this->addDisplayGroup(array(        
@@ -226,16 +232,18 @@ class Form_Fornecedor extends Zend_Form
     
     public function isValid($data)
     {
-        $this->getElement('documento')
-             ->addValidator(
-                     'Db_NoRecordExists',
-                     true,
-                     array(
-                         'table'     => 'fornecedores',
-                         'field'     => 'documento',
-                         'messages'   => 'Este fornecedor já foi cadastrado'
-                         )
-                     );
+        if($this->getAction() ==  "fornecedores/inserir"){
+            $this->getElement('documento')
+                 ->addValidator(
+                         'Db_NoRecordExists',
+                         true,
+                         array(
+                             'table'     => 'fornecedores',
+                             'field'     => 'documento',
+                             'messages'   => 'Este fornecedor já foi cadastrado'
+                             )
+                         );
+        }
         
         return parent::isValid($data);
     }

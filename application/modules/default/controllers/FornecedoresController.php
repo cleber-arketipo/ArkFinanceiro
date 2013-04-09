@@ -46,6 +46,7 @@ class FornecedoresController extends Zend_Controller_Action
     public function editarAction(){
         
         $form = new Form_Fornecedor();
+        $form->removeElement('documento');
         $form->setAction('fornecedores/editar');
         $form->submit->setLabel('Editar');
         $fornecedores = new Default_Model_Fornecedor();
@@ -82,6 +83,21 @@ class FornecedoresController extends Zend_Controller_Action
         $id = $this->_getParam('id');
         $fornecedores->delete("id = $id");
         $this->_redirect('fornecedores');
+        
+    }
+    
+    public function verificaAction(){
+        
+        $this->_helper->layout()->disableLayout(); 
+        $this->_helper->viewRenderer->setNoRender(false);
+        
+        $data = $this->_request->getPost();
+
+        $campos = new Default_Model_Fornecedor();
+        
+        $select = $campos->select()->where('documento = ?', $data['documento']);
+        
+        $this->_helper->json($campos->fetchAll($select));
         
     }
 
