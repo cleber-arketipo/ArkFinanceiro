@@ -59,7 +59,7 @@ class Form_Caixa extends Zend_Form
         $tipo = new Zend_Form_Element_Select('tipo');
         $tipo->setLabel('Tipo')
              ->setAttrib('id', 'tipocaixa')
-             ->setMultiOptions(array(''=>'-- SELECIONE --', 'ENTRADA'=>'ENTRADA', 'SAÍDA'=>'SAÍDA'))
+             ->setMultiOptions(array(''=>'-- SELECIONE --', 'ENTRADA'=>'ENTRADA', 'SAIDA'=>'SAÍDA'))
              ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
