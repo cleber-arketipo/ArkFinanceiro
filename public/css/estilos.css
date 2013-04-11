@@ -138,6 +138,31 @@ table#selecionar .tabela_icones {
     width: 60px;
 }
 
+table#tablecaixa {
+    margin: 0 auto;
+    width: 70%;
+    border-collapse: collapse
+}
+
+table#tablecaixa th, tr, td {
+    border: 1px solid #004667;
+    padding: 5px;
+}
+
+table#tablecaixa th {
+    text-align: center;
+    background: #387AAC;
+    color: #FFF;
+}
+
+table#tablecaixa tr:nth-child(even) {
+    background: #EEE;
+}
+
+table#tablecaixa .tabela_icones {
+    width: 60px;
+}
+
 h2.titulo_pagina {
     color: #004667;
     margin-left: 15%;
@@ -197,6 +222,11 @@ label.label_radio_tipo {
 input.input_radio {
     width: 20px;
     float: right;
+}
+
+#consultacep {
+    float: left;
+    margin-left: 10px;
 }
 
 select {

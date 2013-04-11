@@ -25,11 +25,16 @@ class FornecedoresController extends Zend_Controller_Action
         $form = new Form_Fornecedor();
         $fornecedor = new Default_Model_Fornecedor();
         
+        $date = new Default_View_Helper_Date();
+        
         if ($this->_request->isPost()) {
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $id = $fornecedor->insert($form->getValues());
+                $values = $form->getValues();
+                if($values['fundacao'] != "")
+                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
+                $id = $fornecedor->insert($values);
                 $this->_redirect('fornecedores');
                 
             } else {
@@ -50,12 +55,16 @@ class FornecedoresController extends Zend_Controller_Action
         $form->setAction('fornecedores/editar');
         $form->submit->setLabel('Editar');
         $fornecedores = new Default_Model_Fornecedor();
+        
+        $date = new Default_View_Helper_Date();
 
         if ($this->_request->isPost()) {
             
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
+                if($values['fundacao'] != "")
+                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
                 $fornecedores->update($values, 'id = ' . $values['id']);
                 $this->_redirect('fornecedores');
                 
@@ -69,6 +78,10 @@ class FornecedoresController extends Zend_Controller_Action
             
             $id = $this->_getParam('id');
             $fornecedor = $fornecedores->fetchRow("id =$id")->toArray();
+            
+            if($fornecedor['fundacao'] != "")
+                $fornecedor['fundacao'] = $date->date($fornecedor['fundacao'], Zend_Date::DATE_MEDIUM);
+            
             $form->populate($fornecedor);
             
         }

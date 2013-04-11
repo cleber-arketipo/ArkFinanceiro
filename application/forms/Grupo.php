@@ -41,6 +41,7 @@ class Form_Grupo extends Zend_Form
              ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $submit = new Zend_Form_Element_Submit('submit');

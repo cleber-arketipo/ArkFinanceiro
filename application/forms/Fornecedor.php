@@ -91,6 +91,12 @@ class Form_Fornecedor extends Zend_Form
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
         
+        $fundacao = new Zend_Form_Element_Text('fundacao');
+        $fundacao->setLabel('Fundação')
+                 ->addFilter('StripTags')
+                 ->addValidator('NotEmpty')
+                 ->setDecorators($customElementDecorators);
+        
         $ramo = new Zend_Form_Element_Text('ramo');
         $ramo->setLabel('Ramo de Atividade')
              ->addFilter('StripTags')
@@ -102,8 +108,14 @@ class Form_Fornecedor extends Zend_Form
         $cep->setLabel('CEP')
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
-             ->setAttrib('onmouseout', 'getEndereco()')
              ->setDecorators($customElementDecorators);
+        
+        $consultacep = new Zend_Form_Element_Button('consultacep');
+        $consultacep->setLabel('Consultar CEP')
+                    ->setAttrib('id', 'consultacep')
+                    ->setRequired(false)
+                    ->setIgnore(true)
+                    ->setAttrib('onclick', 'getEndereco()');
         
         $endereco = new Zend_Form_Element_Text('endereco');
         $endereco->setLabel('Endereço')
@@ -200,7 +212,7 @@ class Form_Fornecedor extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipocadastro, $tipo, $documento, $razao_social, $nome, $ie, $ramo, $cep, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
+        $this->addElements(array($id, $tipocadastro, $tipo, $documento, $razao_social, $nome, $ie, $fundacao, $ramo, $cep, $consultacep, $endereco, $numero, $complemento, $bairro, $cidade, $estado, $telefone, $celular, $responsavel, $submit));
         
         
         $this->addDisplayGroup(array(        
@@ -208,8 +220,10 @@ class Form_Fornecedor extends Zend_Form
                 'razao_social',
                 'nome',                
                 'ie',
+                'fundacao',
                 'ramo',
                 'cep',
+                'consultacep',
                 'endereco',
                 'numero',
                 'complemento',

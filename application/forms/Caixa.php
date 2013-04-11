@@ -65,6 +65,14 @@ class Form_Caixa extends Zend_Form
              ->addValidator('NotEmpty')
              ->setDecorators($customElementDecorators);
         
+        $contaatual = new Zend_Form_Element_Hidden('contaatual');
+        $contaatual->setRequired(false)
+                   ->setIgnore(true)
+                   ->setAttrib('readonly', 'readonly')
+                   ->addFilter('StripTags')
+                   ->addValidator('NotEmpty')
+                   ->setDecorators($customElementDecorators);
+        
         $conta = new Zend_Form_Element_Select('conta');
         $conta->setLabel('Conta')
               ->setMultiOptions(array(''=>'-- SELECIONE --'))
@@ -93,6 +101,7 @@ class Form_Caixa extends Zend_Form
              ->setRequired(true)
              ->addFilter('StripTags')
              ->addValidator('NotEmpty')
+             ->addFilter('StringToUpper')
              ->setDecorators($customElementDecorators);
         
         $valor = new Zend_Form_Element_Text('valor');
@@ -116,7 +125,7 @@ class Form_Caixa extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipo, $data, $conta, $grupo, $descricao, $valor, $situacao, $submit));
+        $this->addElements(array($id, $tipo, $data, $contaatual, $conta, $grupo, $descricao, $valor, $situacao, $submit));
                 
         $this->setAction('caixa/inserir')
              ->setMethod('post');

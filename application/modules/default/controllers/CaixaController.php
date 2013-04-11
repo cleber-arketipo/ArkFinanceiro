@@ -16,7 +16,32 @@ class CaixaController extends Zend_Controller_Action
     public function indexAction(){
         
         $caixas = new Default_Model_Caixa();
-        $this->view->posts = $caixas->fetchAll();
+        
+        $resultado = $caixas->fetchAll();
+        
+        for($i=0; $i < count($resultado); $i++){
+            $date = new Default_View_Helper_Date();
+            $resultado[$i]['data'] = $date->date($resultado[$i]['data'], Zend_Date::DATE_MEDIUM);
+            
+            $resultado[$i]['valor'] = str_replace(".", ",", $resultado[$i]['valor']);
+            
+            $consultaGrupo = new Default_Model_Grupo();
+            $idGrupo = $resultado[$i]['grupo'];
+            $resGrupo = $consultaGrupo->fetchRow("id =$idGrupo")->toArray();
+            $resultado[$i]['grupo'] = $resGrupo['nome'];
+            
+            if($resultado[$i]['tipo'] == 'ENTRADA')
+                $consultaConta = new Default_Model_Cliente();
+            elseif($resultado[$i]['tipo'] == 'SAIDA')
+                $consultaConta = new Default_Model_Fornecedor();
+            
+            $idConta = $resultado[$i]['conta'];
+            $resConta = $consultaConta->fetchRow("id =$idConta")->toArray();
+            $resultado[$i]['conta'] = $resConta['nome'];
+            
+        }
+        
+        $this->view->posts = $resultado;
         
     }
     
@@ -33,6 +58,7 @@ class CaixaController extends Zend_Controller_Action
                 
                 $values = $form->getValues();
                 $values['data'] = $date->date($values['data'], Zend_Date::ISO_8601, 'en_US');
+                $values['valor'] = str_replace(",", ".", $values['valor']);
                 $id = $caixa->insert($values);
                 $this->_redirect('caixa');
                 
@@ -62,12 +88,15 @@ class CaixaController extends Zend_Controller_Action
                 
                 $values = $form->getValues();
                 $values['data'] = $date->date($values['data'], Zend_Date::ISO_8601, 'en_US');
+                $values['valor'] = str_replace(",", ".", $values['valor']);
                 $caixas->update($values, 'id = ' . $values['id']);
                 $this->_redirect('caixa');
                 
             } else {
                 
-                $form->populate($form->getValues()); 
+                $values = $form->getValues();
+                //$values['contaatual'] = $values['conta'];
+                $form->populate($values); 
                 
             }
             
@@ -77,6 +106,9 @@ class CaixaController extends Zend_Controller_Action
             $caixa = $caixas->fetchRow("id =$id")->toArray();
         
             $caixa['data'] = $date->date($caixa['data'], Zend_Date::DATE_MEDIUM);
+            $caixa['valor'] = str_replace(".", ",", $caixa['valor']);
+            
+            $caixa['contaatual'] = $caixa['conta'];
             
             $form->populate($caixa);
             

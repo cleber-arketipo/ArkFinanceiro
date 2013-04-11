@@ -25,11 +25,16 @@ class ClientesController extends Zend_Controller_Action
         $form = new Form_Cliente();
         $cliente = new Default_Model_Cliente();
         
+        $date = new Default_View_Helper_Date();
+        
         if ($this->_request->isPost()) {
                         
             if ($form->isValid($this->_request->getPost())) {
                 
-                $id = $cliente->insert($form->getValues());
+                $values = $form->getValues();
+                if($values['fundacao'] != "")
+                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
+                $id = $cliente->insert($values);
                 $this->_redirect('clientes');
                 
             } else {
@@ -50,12 +55,16 @@ class ClientesController extends Zend_Controller_Action
         $form->setAction('clientes/editar');
         $form->submit->setLabel('Editar');
         $clientes = new Default_Model_Cliente();
+        
+        $date = new Default_View_Helper_Date();
 
         if ($this->_request->isPost()) {
             
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
+                if($values['fundacao'] != "")
+                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
                 $clientes->update($values, 'id = ' . $values['id']);
                 $this->_redirect('clientes');
                 
@@ -69,6 +78,10 @@ class ClientesController extends Zend_Controller_Action
             
             $id = $this->_getParam('id');
             $cliente = $clientes->fetchRow("id =$id")->toArray();
+            
+            if($cliente['fundacao'] != "")
+                $cliente['fundacao'] = $date->date($cliente['fundacao'], Zend_Date::DATE_MEDIUM);
+            
             $form->populate($cliente);
             
         }

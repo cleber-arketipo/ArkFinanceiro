@@ -25,7 +25,9 @@ $(function() {
         else if(jQuery($('#tipo-PJ')).is(":checked"))
             ativaPJ();
     }
-    
+
+    $("#valor").maskMoney({decimal:",", thousands:""});
+
     $("#cep").mask("99.999-999");
     $("#telefone").mask("(99) 99999999");
     $("#celular").mask("(99) 99999999?9");
@@ -95,6 +97,60 @@ $(function() {
         
     });
     
+    var url = get_url_array();
+    
+    if((url[1] === 'caixa') && (url[2] === 'editar') && (url[3] != '')){
+        
+        valcontaatual = $('#contaatual').val();
+        
+        $.ajax({
+            type: "POST",
+            url: 'caixa/contas',
+            data: {tipocaixa: $("#tipocaixa").val()},
+            dataType: "json",
+            success: function(retorno) {
+                
+                var options = '<option value="">-- SELECIONE --</option>';
+                
+                $.each(retorno , function(key, value){
+                    if(valcontaatual === value['id'])
+                        options += '<option value="' + value['id'] + '" selected="selected">' + value['nome'] + '</option>';
+                    else
+                        options += '<option value="' + value['id'] + '">' + value['nome'] + '</option>';
+                });
+                
+                $("#conta").html(options);
+            }
+          
+        });
+    }
+        
+    
+    // jQuery UI    
+    $("#data, #fundacao").datepicker({
+        dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'
+            ],
+        dayNamesMin: [
+        'D','S','T','Q','Q','S','S','D'
+        ],
+        dayNamesShort: [
+        'Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'
+        ],
+        monthNames: [  'Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro',
+        'Outubro','Novembro','Dezembro'
+        ],
+        monthNamesShort: [
+        'Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set',
+        'Out','Nov','Dez'
+        ],
+        nextText: 'Próximo',
+        prevText: 'Anterior'
+    });
+    
+    $("#tablecaixa").tablesorter(); 
+    
+    
 });
 
 function ativaPF(){
@@ -104,6 +160,7 @@ function ativaPF(){
     $('label[for=razao_social]').css('display', 'none');
     $('#razao_social').css('display', 'none');
     $('label[for=ie]').css('display', 'none');
+    $('label[for=fundacao]').html('Data de Nascimento');
     $('#ie').css('display', 'none');
     $('label[for=responsavel]').css('display', 'none');
     $('#responsavel').css('display', 'none');
@@ -117,6 +174,7 @@ function ativaPJ(){
     $('label[for=razao_social]').css('display', 'block');
     $('#razao_social').css('display', 'block');
     $('label[for=ie]').css('display', 'block');
+    $('label[for=fundacao]').html('Data de Fundação');
     $('#ie').css('display', 'block');
     $('label[for=responsavel]').css('display', 'block');
     $('#responsavel').css('display', 'block');
@@ -140,4 +198,12 @@ function getEndereco() {
 
 	});
     }
+}
+
+function get_url_array() {
+    url = window.location;
+    url = url.toString();
+    url = url.split('/');
+    url.splice(0,3);
+    return url;
 }

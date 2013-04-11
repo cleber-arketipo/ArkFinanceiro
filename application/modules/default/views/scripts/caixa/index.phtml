@@ -1,11 +1,17 @@
 <h2 class='titulo_pagina'>Controle de Caixa</h2>
 <p class="link_inserir"><a href="/financeiro/caixa/inserir"><img src="public/imagens/add.png" width="24" height="24" alt="Inserir Caixa" class="img_inserir" />Cadastrar Caixa</a></p>
 <?php foreach($this->posts as $p) { ?>
-<table id="selecionar">
+<table id="tablecaixa" class="tablesorter">
     <thead>
         <tr>
             <th class="tabela_icones">ID</th>
-            <th>Grupo</th>
+            <th class="tabela_icones">Tipo</th>
+            <th class="tabela_icones">Data</th>
+            <th class="tabela_icones">Conta</th>
+            <th class="tabela_icones">Grupo</th>
+            <th>Descrição</th>
+            <th class="tabela_icones">Valor</th>
+            <th class="tabela_icones">Situação</th>
             <th class="tabela_icones">Editar</th>
             <th class="tabela_icones">Excluir</th>
         </tr>
@@ -14,7 +20,13 @@
         <?php foreach($this->posts as $p) {?>
                 <tr>
                     <td align="center"><?php echo $p['id']; ?></td>
+                    <td align="center"><?php echo $p['tipo']; ?></td>
+                    <td align="center"><?php echo $p['data']; ?></td>
+                    <td align="center"><?php echo $p['conta']; ?></td>
+                    <td align="center"><?php echo $p['grupo']; ?></td>
                     <td><?php echo $p['descricao']; ?></td>
+                    <td align="center"><?php echo $p['valor']; ?></td>
+                    <td align="center"><?php echo $p['situacao']; ?></td>
                     <td align="center"><a href="/financeiro/caixa/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Caixa" /></a></td>
                     <td align="center"><a href="/financeiro/caixa/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Caixa" /></a></td>
                 </tr>
