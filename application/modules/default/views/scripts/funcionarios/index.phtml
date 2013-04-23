@@ -1,0 +1,28 @@
+<h2 class='titulo_pagina'>Funcionários</h2>
+<p class="link_inserir"><a href="/financeiro/funcionarios/inserir"><img src="public/imagens/add.png" width="24" height="24" alt="Cadastrar Funcionário" class="img_inserir" />Cadastrar Funcionário</a></p>
+<?php foreach($this->posts as $p) { ?>
+<table id="selecionar" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="tabela_icones">ID</th>
+            <th>Nome</th>
+            <th>Telefone</th>
+            <th>Celular</th>
+            <th class="tabela_icones">Editar</th>
+            <th class="tabela_icones">Excluir</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->posts as $p) { ?>
+                <tr>
+                    <td align="center"><?php echo $p['id']; ?></td>
+                    <td><?php echo $p['nome']; ?></td>
+                    <td><?php echo $p['telefone']; ?></td>
+                    <td><?php echo $p['celular']; ?></td>
+                    <td align="center"><a href="/financeiro/funcionarios/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Funcionário" /></a></td>
+                    <td align="center"><a href="/financeiro/funcionarios/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Funcionário" /></a></td>
+                </tr>
+        <?php } ?>
+    </tbody>
+</table>
+<?php } ?>

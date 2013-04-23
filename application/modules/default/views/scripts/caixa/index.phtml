@@ -1,5 +1,6 @@
 <h2 class='titulo_pagina'>Controle de Caixa</h2>
 <p class="link_inserir"><a href="/financeiro/caixa/inserir"><img src="public/imagens/add.png" width="24" height="24" alt="Inserir Caixa" class="img_inserir" />Cadastrar Caixa</a></p>
+<!--<img src="public/imagens/add.png" width="24" height="24" alt="Inserir Caixa" class="img_inserir" id="abreCadastro" />-->
 <?php foreach($this->posts as $p) { ?>
 <table id="tablecaixa" class="tablesorter">
     <thead>
@@ -17,20 +18,49 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach($this->posts as $p) {?>
+        <?php foreach($this->posts as $p) {
+            
+                $d1 =& explode('/', date("d/m/Y"));
+                $d2 =& explode('/', $p['data']);
+
+                $t1 =& mktime(0, 0, 0, $d1[1], $d1[0], $d1[2]);
+                $t2 =& mktime(0, 0, 0, $d2[1], $d2[0], $d2[2]);
+
+                if($p['situacao'] == "PREVISTO"){
+                    $corlinha = 'style="background:#EEEEEE;"';
+                    if($t1 > $t2)
+                        $corlinha = 'style="background:#FF9999;"';
+                } else {
+                    $corlinha = '';
+                }
+        ?>
                 <tr>
-                    <td align="center"><?php echo $p['id']; ?></td>
-                    <td align="center"><?php echo $p['tipo']; ?></td>
-                    <td align="center"><?php echo $p['data']; ?></td>
-                    <td align="center"><?php echo $p['conta']; ?></td>
-                    <td align="center"><?php echo $p['grupo']; ?></td>
-                    <td><?php echo $p['descricao']; ?></td>
-                    <td align="center"><?php echo $p['valor']; ?></td>
-                    <td align="center"><?php echo $p['situacao']; ?></td>
-                    <td align="center"><a href="/financeiro/caixa/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Caixa" /></a></td>
-                    <td align="center"><a href="/financeiro/caixa/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Caixa" /></a></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['id']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['tipo']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['data']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['conta']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['grupo']; ?></td>
+                    <td <?php echo($corlinha); ?>><?php echo $p['descricao']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>>R$ <?php echo $p['valor']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><?php echo $p['situacao']; ?></td>
+                    <td align="center" <?php echo($corlinha); ?>><a href="/financeiro/caixa/editar/id/<?php echo $p['id'];?>"><img src="public/imagens/edit.png" width="16" height="16" alt="Editar Caixa" /></a></td>
+                    <td align="center" <?php echo($corlinha); ?>><a href="/financeiro/caixa/deletar/id/<?php echo $p['id'];?>" class="excluir"><img src="public/imagens/delete.png" width="16" height="16" alt="Excluir Caixa" /></a></td>
                 </tr>
         <?php } ?>
     </tbody>
 </table>
 <?php } ?>
+
+
+<div id='caixa_total'>
+    
+</div>
+<div id='conteudo_caixa'>
+    <div id='fechar'>
+        <strong>X | Fechar</strong>
+    </div>
+    <div class="clear"></div>
+    <div>
+        <?=$this->render('caixa/inserir.phtml')?>
+    </div>
+</div>

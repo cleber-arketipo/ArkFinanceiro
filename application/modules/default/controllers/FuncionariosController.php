@@ -1,6 +1,6 @@
 <?php
 
-class ClientesController extends Zend_Controller_Action
+class FuncionariosController extends Zend_Controller_Action
 {
 
     public function init()
@@ -15,16 +15,16 @@ class ClientesController extends Zend_Controller_Action
 
     public function indexAction(){
         
-        $clientes = new Default_Model_Cliente();
-        $select = $clientes->select()->order('nome ASC');
-        $this->view->posts = $clientes->fetchAll($select);
+        $funcionarios = new Default_Model_Funcionario();
+        $select = $funcionarios->select()->order('nome ASC');
+        $this->view->posts = $funcionarios->fetchAll($select);
         
     }
     
     public function inserirAction(){
         
-        $form = new Form_Cliente();
-        $cliente = new Default_Model_Cliente();
+        $form = new Form_Funcionario();
+        $funcionario = new Default_Model_Funcionario();
         
         $date = new Default_View_Helper_Date();
         
@@ -33,10 +33,10 @@ class ClientesController extends Zend_Controller_Action
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
-                if($values['fundacao'] != "")
-                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
-                $id = $cliente->insert($values);
-                $this->_redirect('clientes');
+                if($values['nascimento'] != "")
+                    $values['nascimento'] = $date->date($values['nascimento'], Zend_Date::ISO_8601, 'en_US');
+                $id = $funcionario->insert($values);
+                $this->_redirect('funcionarios');
                 
             } else {
                 
@@ -51,11 +51,10 @@ class ClientesController extends Zend_Controller_Action
     
     public function editarAction(){
         
-        $form = new Form_Cliente();
-        //$form->removeElement('documento');
-        $form->setAction('clientes/editar');
+        $form = new Form_Funcionario();
+        $form->setAction('funcionarios/editar');
         $form->submit->setLabel('Editar');
-        $clientes = new Default_Model_Cliente();
+        $funcionarios = new Default_Model_Funcionario();
         
         $date = new Default_View_Helper_Date();
 
@@ -64,10 +63,10 @@ class ClientesController extends Zend_Controller_Action
             if ($form->isValid($this->_request->getPost())) {
                 
                 $values = $form->getValues();
-                if($values['fundacao'] != "")
-                    $values['fundacao'] = $date->date($values['fundacao'], Zend_Date::ISO_8601, 'en_US');
-                $clientes->update($values, 'id = ' . $values['id']);
-                $this->_redirect('clientes');
+                if($values['nascimento'] != "")
+                    $values['nascimento'] = $date->date($values['nascimento'], Zend_Date::ISO_8601, 'en_US');
+                $funcionarios->update($values, 'id = ' . $values['id']);
+                $this->_redirect('funcionarios');
                 
             } else {
                 
@@ -78,12 +77,12 @@ class ClientesController extends Zend_Controller_Action
         } else {
             
             $id = $this->_getParam('id');
-            $cliente = $clientes->fetchRow("id =$id")->toArray();
+            $funcionario = $funcionarios->fetchRow("id =$id")->toArray();
             
-            if($cliente['fundacao'] != "")
-                $cliente['fundacao'] = $date->date($cliente['fundacao'], Zend_Date::DATE_MEDIUM);
+            if($funcionario['nascimento'] != "")
+                $funcionario['nascimento'] = $date->date($funcionario['nascimento'], Zend_Date::DATE_MEDIUM);
             
-            $form->populate($cliente);
+            $form->populate($funcionario);
             
         }
         
@@ -93,13 +92,14 @@ class ClientesController extends Zend_Controller_Action
     
     public function deletarAction(){
         
-        $clientes = new Default_Model_Cliente();
+        $funcionarios = new Default_Model_Funcionario();
         $id = $this->_getParam('id');
-        $clientes->delete("id = $id");
-        $this->_redirect('clientes');
+        $funcionarios->delete("id = $id");
+        $this->_redirect('funcionarios');
         
     }
     
+    /*
     public function verificaAction(){
         
         $this->_helper->layout()->disableLayout(); 
@@ -114,5 +114,7 @@ class ClientesController extends Zend_Controller_Action
         $this->_helper->json($campos->fetchAll($select));
         
     }
+     * 
+     */
 
 }

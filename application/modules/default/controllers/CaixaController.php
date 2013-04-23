@@ -16,8 +16,8 @@ class CaixaController extends Zend_Controller_Action
     public function indexAction(){
         
         $caixas = new Default_Model_Caixa();
-        
-        $resultado = $caixas->fetchAll();
+        $select = $caixas->select()->order('id DESC');
+        $resultado = $caixas->fetchAll($select);
         
         for($i=0; $i < count($resultado); $i++){
             $date = new Default_View_Helper_Date();
@@ -25,15 +25,20 @@ class CaixaController extends Zend_Controller_Action
             
             $resultado[$i]['valor'] = str_replace(".", ",", $resultado[$i]['valor']);
             
+            if($resultado[$i]['tipo'] == 'ENTRADA'){
+                $consultaConta = new Default_Model_Cliente();
+            } elseif($resultado[$i]['tipo'] == 'SAIDA'){
+                if($resultado[$i]['grupo'] == 6){
+                    $consultaConta = new Default_Model_Funcionario();
+                } else {
+                    $consultaConta = new Default_Model_Fornecedor();
+                }
+            }
+            
             $consultaGrupo = new Default_Model_Grupo();
             $idGrupo = $resultado[$i]['grupo'];
             $resGrupo = $consultaGrupo->fetchRow("id =$idGrupo")->toArray();
             $resultado[$i]['grupo'] = $resGrupo['nome'];
-            
-            if($resultado[$i]['tipo'] == 'ENTRADA')
-                $consultaConta = new Default_Model_Cliente();
-            elseif($resultado[$i]['tipo'] == 'SAIDA')
-                $consultaConta = new Default_Model_Fornecedor();
             
             $idConta = $resultado[$i]['conta'];
             $resConta = $consultaConta->fetchRow("id =$idConta")->toArray();
@@ -42,6 +47,9 @@ class CaixaController extends Zend_Controller_Action
         }
         
         $this->view->posts = $resultado;
+        
+        $form = new Form_Caixa();
+        $this->view->form = $form;
         
     }
     
@@ -136,8 +144,12 @@ class CaixaController extends Zend_Controller_Action
 
         if($data['tipocaixa'] == 'ENTRADA')
             $campos = new Default_Model_Cliente();
-        elseif($data['tipocaixa'] == 'SAIDA')
-            $campos = new Default_Model_Fornecedor();
+        elseif($data['tipocaixa'] == 'SAIDA'){
+            if($data['grupocaixa'] == 6)
+                $campos = new Default_Model_Funcionario();
+            else
+                $campos = new Default_Model_Fornecedor();
+        }
         
         $select = $campos->select()->order('nome ASC');
         

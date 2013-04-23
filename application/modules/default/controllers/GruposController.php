@@ -16,7 +16,8 @@ class GruposController extends Zend_Controller_Action
     public function indexAction(){
         
         $grupos = new Default_Model_Grupo();
-        $this->view->posts = $grupos->fetchAll();
+        $select = $grupos->select()->order('nome ASC');
+        $this->view->posts = $grupos->fetchAll($select);
         
     }
     

@@ -83,7 +83,8 @@ class Form_Caixa extends Zend_Form
               ->setDecorators($customElementDecorators);
                 
         $grupo = new Zend_Form_Element_Select('grupo');
-        $grupo->setLabel('Grupo')      
+        $grupo->setLabel('Grupo')    
+              ->setAttrib('id', 'grupocaixa')
               ->addMultiOption('', '-- SELECIONE --')
               ->setRequired(true)
               ->addFilter('StripTags')
@@ -125,7 +126,7 @@ class Form_Caixa extends Zend_Form
                ->setIgnore(true)
                ->setDecorators($submitElementDecorators);
         
-        $this->addElements(array($id, $tipo, $data, $contaatual, $conta, $grupo, $descricao, $valor, $situacao, $submit));
+        $this->addElements(array($id, $tipo, $data, $contaatual, $grupo, $conta, $descricao, $valor, $situacao, $submit));
                 
         $this->setAction('caixa/inserir')
              ->setMethod('post');

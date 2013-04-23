@@ -16,7 +16,8 @@ class FornecedoresController extends Zend_Controller_Action
     public function indexAction(){
         
         $fornecedores = new Default_Model_Fornecedor();
-        $this->view->posts = $fornecedores->fetchAll();
+        $select = $fornecedores->select()->order('nome ASC');
+        $this->view->posts = $fornecedores->fetchAll($select);
         
     }
     
@@ -51,7 +52,7 @@ class FornecedoresController extends Zend_Controller_Action
     public function editarAction(){
         
         $form = new Form_Fornecedor();
-        $form->removeElement('documento');
+        //$form->removeElement('documento');
         $form->setAction('fornecedores/editar');
         $form->submit->setLabel('Editar');
         $fornecedores = new Default_Model_Fornecedor();

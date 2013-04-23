@@ -40,12 +40,12 @@ $(function() {
         ativaPJ();
     });
     
-    $("#tipocaixa").change(function(){        
+    $("#tipocaixa, #grupocaixa").change(function(){        
         
         $.ajax({
             type: "POST",
             url: 'caixa/contas',
-            data: {tipocaixa: $("#tipocaixa").val()},
+            data: {tipocaixa: $("#tipocaixa").val(), grupocaixa: $("#grupocaixa").val()},
             dataType: "json",
             success: function(retorno) {
                 
@@ -106,7 +106,7 @@ $(function() {
         $.ajax({
             type: "POST",
             url: 'caixa/contas',
-            data: {tipocaixa: $("#tipocaixa").val()},
+            data: {tipocaixa: $("#tipocaixa").val(), grupocaixa: $("#grupocaixa").val()},
             dataType: "json",
             success: function(retorno) {
                 
@@ -148,8 +148,68 @@ $(function() {
         prevText: 'Anterior'
     });
     
-    $("#tablecaixa").tablesorter(); 
+    $("#nascimento").datepicker({
+        dateFormat: 'dd/mm/yy',
+        dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado','Domingo'
+            ],
+        dayNamesMin: [
+        'D','S','T','Q','Q','S','S','D'
+        ],
+        dayNamesShort: [
+        'Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'
+        ],
+        monthNames: [  'Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro',
+        'Outubro','Novembro','Dezembro'
+        ],
+        monthNamesShort: [
+        'Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set',
+        'Out','Nov','Dez'
+        ],
+        nextText: 'Próximo',
+        prevText: 'Anterior',
+        changeMonth: true,
+        changeYear: true,
+        yearRange:'-100:+10'
+    });
     
+    $("#tablecaixa").tablesorter({
+        sortList: [[0,1]],        
+        headers: { 
+            5: { 
+                sorter: false 
+            }, 
+            8: { 
+                sorter: false 
+            },
+            9: { 
+                sorter: false 
+            }
+        }
+    });
+    
+    
+    
+    $("#abreCadastro").click(function(){
+        $("#caixa_total").fadeTo(500,0.4).css("display","block");
+        $("#conteudo_caixa").animate();
+        $("#conteudo_caixa").css("display","block").animate(null,700,function(){
+            $("#fechar").css("display","block");
+        });
+    });
+    
+    $("#fechar").click(function(){
+        $("#conteudo_caixa").css("display","none").animate(null,700,function(){
+            $("#fechar").css("display","none");
+        });
+        
+        $("#conteudo_caixa").animate(null,700,function(){
+            $("#caixa_total").fadeTo(500,0).css("display","none");
+            $("#conteudo_caixa").css("display","none");
+        });
+    });
+    
+    $("#cpf").mask("999.999.999-99");
+    $("#rg").mask("?999999999999");
     
 });
 
